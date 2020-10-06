@@ -35,27 +35,27 @@ class _HomeState extends State<Home> {
           childAspectRatio: widthScreen/heightScreen * 1.68,
         children: <Widget>[
           Container(
-            child: buildFlatButton("Onde\nestou?", Colors.black, Colors.white,
+            child: buildButton("Onde\nestou?", Colors.black, Colors.white,
                 MaterialPageRoute(builder: (context) => OndeEstou())),
           ),
           Container(
-            child: buildFlatButton("Descrever\nEspaço", Colors.white, Colors.black,
+            child: buildButton("Descrever\nEspaço", Colors.white, Colors.black,
                 MaterialPageRoute(builder: (context) => DescreverEspaco())),
           ),
           Container(
-            child: buildFlatButton("Destinos", Colors.white, Colors.black,
+            child: buildButton("Destinos", Colors.white, Colors.black,
                 MaterialPageRoute(builder: (context) => Destinos())),
           ),
           Container(
-            child: buildFlatButton("Locais", Colors.black, Colors.white,
+            child: buildButton("Locais", Colors.black, Colors.white,
                 MaterialPageRoute(builder: (context) => Locais())),
           ),
           Container(
-            child: buildFlatButton("Tutorial", Colors.black, Colors.white,
+            child: buildButton("Tutorial", Colors.black, Colors.white,
                 MaterialPageRoute(builder: (context) => Tutorial())),
           ),
           Container(
-            child: buildFlatButton("Sair", Colors.white, Colors.black,
+            child: buildButton("Sair", Colors.white, Colors.black,
                 MaterialPageRoute(builder: (context) => exit(0))),
           ),
         ],
@@ -101,13 +101,13 @@ class _HomeState extends State<Home> {
       ),
     );
   }
-  Widget buildFlatButton(String label, Color buttonColor, Color textColor,
+  Widget buildButton(String label, Color buttonColor, Color textColor,
       MaterialPageRoute m) {
     return  FlatButton(
         color: buttonColor,
         child: Text(
           label,
-          style: TextStyle(color: textColor, fontSize: 14.0),
+          style: TextStyle(color: textColor, fontSize: 15.0),
           textAlign: TextAlign.center,
         ),
         onPressed: () {
