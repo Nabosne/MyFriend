@@ -22,9 +22,6 @@ class _HomeState extends State<Home> {
       backgroundColor: Colors.white,
       appBar: AppBar(
         title: Text("MyFriend"),
-        actions: <Widget>[
-          IconButton(icon: Icon(Icons.refresh), onPressed: () {})
-        ],
         backgroundColor: Colors.blue,
         centerTitle: true,
       ),
