@@ -53,7 +53,8 @@ class _HomeState extends State<Home> {
                 destino: Tutorial()),
           ),
           Container(
-              child: buildButton(context, "Sair", Colors.white, Colors.black)),
+              child: buildButton(context, "Sair", Colors.white, Colors.black)
+          ),
         ],
       ),
     );
