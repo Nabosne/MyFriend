@@ -1,5 +1,5 @@
-import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:myfriend/ui/DescreverEspaco.dart';
 import 'package:myfriend/ui/OndeEstou.dart';
 import 'package:myfriend/ui/Tutorial.dart';
@@ -19,7 +19,6 @@ class _HomeState extends State<Home> {
     final double heightScreen = mediaQueryData.size.height;
 
     return Scaffold(
-
       backgroundColor: Colors.white,
       appBar: AppBar(
         title: Text("MyFriend"),
@@ -32,87 +31,55 @@ class _HomeState extends State<Home> {
       body: GridView.count(
         padding: EdgeInsets.zero,
         crossAxisCount: 2,
-          childAspectRatio: widthScreen/heightScreen * 1.68,
+        childAspectRatio: widthScreen / heightScreen * 1.68,
         children: <Widget>[
           Container(
-            child: buildButton("Onde\nestou?", Colors.black, Colors.white,
-                MaterialPageRoute(builder: (context) => OndeEstou())),
+            child: buildButton(
+                context, "Onde\nestou?", Colors.black, Colors.white,
+                destino: OndeEstou()),
           ),
           Container(
-            child: buildButton("Descrever\nEspaço", Colors.white, Colors.black,
-                MaterialPageRoute(builder: (context) => DescreverEspaco())),
+            child: buildButton(
+                context, "Descrever\nEspaço", Colors.white, Colors.black,
+                destino: DescreverEspaco()),
           ),
           Container(
-            child: buildButton("Destinos", Colors.white, Colors.black,
-                MaterialPageRoute(builder: (context) => Destinos())),
+            child: buildButton(context, "Destinos", Colors.white, Colors.black,
+                destino: Destinos()),
           ),
           Container(
-            child: buildButton("Locais", Colors.black, Colors.white,
-                MaterialPageRoute(builder: (context) => Locais())),
+            child: buildButton(context, "Locais", Colors.black, Colors.white,
+                destino: Locais()),
           ),
           Container(
-            child: buildButton("Tutorial", Colors.black, Colors.white,
-                MaterialPageRoute(builder: (context) => Tutorial())),
+            child: buildButton(context, "Tutorial", Colors.black, Colors.white,
+                destino: Tutorial()),
           ),
           Container(
-            child: buildButton("Sair", Colors.white, Colors.black,
-                MaterialPageRoute(builder: (context) => exit(0))),
-          ),
+              child: buildButton(context, "Sair", Colors.white, Colors.black)),
         ],
-        /*
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: <Widget>[
-              Icon(
-                Icons.person_pin,
-                size: 80,
-                color: Colors.black,
-              ),
-              Row(
-                children: [
-                  buildFlatButton("Onde\nestou?", Colors.black, Colors.white,
-                      MaterialPageRoute(builder: (context) => OndeEstou())),
-                  buildFlatButton(
-                      "Descrever\nEspaço",
-                      Colors.white,
-                      Colors.black,
-                      MaterialPageRoute(
-                          builder: (context) => DescreverEspaco())),
-                ],
-              ),
-              Row(
-                children: [
-                  buildFlatButton("Destinos", Colors.white, Colors.black,
-                      MaterialPageRoute(builder: (context) => Destinos())),
-                  buildFlatButton("Locais", Colors.black, Colors.white,
-                      MaterialPageRoute(builder: (context) => Locais())),
-                ],
-              ),
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  buildFlatButton("Tutorial", Colors.black, Colors.white,
-                      MaterialPageRoute(builder: (context) => Tutorial())),
-                  buildFlatButton("Sair", Colors.white, Colors.black,
-                      MaterialPageRoute(builder: (context) => exit(0))),
-                ],
-              ),
-            ],
-          )*/
       ),
     );
   }
-  Widget buildButton(String label, Color buttonColor, Color textColor,
-      MaterialPageRoute m) {
-    return  FlatButton(
-        color: buttonColor,
-        child: Text(
-          label,
-          style: TextStyle(color: textColor, fontSize: 15.0),
-          textAlign: TextAlign.center,
-        ),
-        onPressed: () {
-          //Navigator.pop(context, m);
-          Navigator.push(context, m);
-        });
+
+  Widget buildButton(
+      BuildContext context, String label, Color buttonColor, Color textColor,
+      {dynamic destino}) {
+    return FlatButton(
+      color: buttonColor,
+      child: Text(
+        label,
+        style: TextStyle(color: textColor, fontSize: 15.0),
+        textAlign: TextAlign.center,
+      ),
+      onPressed: () {
+        if (label == "Sair") {
+          SystemNavigator.pop();
+        } else {
+          Navigator.push(
+              context, MaterialPageRoute(builder: (context) => destino));
+        }
+      },
+    );
   }
 }

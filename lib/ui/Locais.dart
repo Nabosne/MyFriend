@@ -33,10 +33,7 @@ class _Locais extends State<Locais> {
             disabledColor: Colors.grey,
             disabledTextColor: Colors.black,
             splashColor: Colors.blueAccent,
-            onPressed: () {
-              Navigator.push(
-                  context, MaterialPageRoute(builder: (context) => Locais()));
-            },
+            onPressed: () {},
             child: Text(
               "Faculdade X",
               style: TextStyle(fontSize: 25.0),
@@ -53,10 +50,7 @@ class _Locais extends State<Locais> {
             disabledTextColor: Colors.black,
             //padding: EdgeInsets.all(30.0),
             splashColor: Colors.blueAccent,
-            onPressed: () {
-              Navigator.push(
-                  context, MaterialPageRoute(builder: (context) => Locais()));
-            },
+            onPressed: () {},
             child: Text(
               "Museu X",
               style: TextStyle(fontSize: 25.0),
@@ -72,10 +66,7 @@ class _Locais extends State<Locais> {
             disabledColor: Colors.grey,
             disabledTextColor: Colors.black,
             splashColor: Colors.blueAccent,
-            onPressed: () {
-              Navigator.push(
-                  context, MaterialPageRoute(builder: (context) => Locais()));
-            },
+            onPressed: () {},
             child: Text(
               "Shopping X",
               style: TextStyle(fontSize: 25.0),

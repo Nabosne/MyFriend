@@ -33,10 +33,7 @@ class _Destinos extends State<Destinos> {
             disabledColor: Colors.grey,
             disabledTextColor: Colors.black,
             splashColor: Colors.blueAccent,
-            onPressed: () {
-              Navigator.push(
-                  context, MaterialPageRoute(builder: (context) => Destinos()));
-            },
+            onPressed: () {},
             child: Text(
               "Banheiro",
               style: TextStyle(fontSize: 25.0),
@@ -53,10 +50,7 @@ class _Destinos extends State<Destinos> {
             disabledTextColor: Colors.black,
             //padding: EdgeInsets.all(30.0),
             splashColor: Colors.blueAccent,
-            onPressed: () {
-              Navigator.push(
-                  context, MaterialPageRoute(builder: (context) => Destinos()));
-            },
+            onPressed: () {},
             child: Text(
               "Secretaria",
               style: TextStyle(fontSize: 25.0),
