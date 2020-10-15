@@ -31,36 +31,36 @@ class _HomeState extends State<Home> {
         childAspectRatio: widthScreen / heightScreen * 1.68,
         children: <Widget>[
           Container(
-            child: buildButton(
+            child: _buildButton(
                 context, "Onde\nestou?", Colors.black, Colors.white,
                 destino: OndeEstou()),
           ),
           Container(
-            child: buildButton(
+            child: _buildButton(
                 context, "Descrever\nEspaço", Colors.white, Colors.black,
                 destino: DescreverEspaco()),
           ),
           Container(
-            child: buildButton(context, "Destinos", Colors.white, Colors.black,
+            child: _buildButton(context, "Destinos", Colors.white, Colors.black,
                 destino: Destinos()),
           ),
           Container(
-            child: buildButton(context, "Locais", Colors.black, Colors.white,
+            child: _buildButton(context, "Locais", Colors.black, Colors.white,
                 destino: Locais()),
           ),
           Container(
-            child: buildButton(context, "Tutorial", Colors.black, Colors.white,
+            child: _buildButton(context, "Tutorial", Colors.black, Colors.white,
                 destino: Tutorial()),
           ),
           Container(
-              child: buildButton(context, "Sair", Colors.white, Colors.black)
+              child: _buildButton(context, "Sair", Colors.white, Colors.black)
           ),
         ],
       ),
     );
   }
 
-  Widget buildButton(
+  Widget _buildButton(
       BuildContext context, String label, Color buttonColor, Color textColor,
       {dynamic destino}) {
     return FlatButton(
