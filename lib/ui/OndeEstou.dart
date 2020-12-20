@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_blue/flutter_blue.dart';
 import 'package:flutter_blue_beacon/flutter_blue_beacon.dart';
 import 'package:myfriend/helpers/widgets.dart';
+import 'package:myfriend/ui/ScreenBeacon.dart';
 
 class OndeEstou extends StatefulWidget {
   @override
@@ -57,7 +58,7 @@ class _OndeEstouState extends State<OndeEstou> {
   _startScan() {
     print("Scanning now");
     _scanSubscription = flutterBlueBeacon
-        .scan(timeout: const Duration(seconds: 20))
+        .scan()
         .listen((beacon) {
       print('localName: ${beacon.scanResult.advertisementData.localName}');
       print(
@@ -99,15 +100,52 @@ class _OndeEstouState extends State<OndeEstou> {
   }
 
   _buildScanResultTiles() {
+
     return beacons.values.map<Widget>((b) {
       if (b is IBeacon) {
-        return IBeaconCard(iBeacon: b);
+        return ScreenBeacon(iBeacon: b);
+
       }
       if (b is EddystoneUID) {
         return EddystoneUIDCard(eddystoneUID: b);
       }
       if (b is EddystoneEID) {
         return EddystoneEIDCard(eddystoneEID: b);
+      }
+      if (b == null || b.distance == "") {
+        return Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Padding(
+                  padding: EdgeInsets.all(30.0),
+                ),
+                Text("Nenhum my friend proximo \n=(",
+                  style: TextStyle(color: Colors.white, fontSize: 23),
+                  textAlign: TextAlign.center,
+                ),
+                /*Text("iBeacon"),
+            Text("major: ${iBeacon.major}"),
+            Text("minor: ${iBeacon.minor}"),
+            Text("tx: ${iBeacon.tx}"),
+            Text("rssi: ${iBeacon.rssi}"),*/
+                Padding(
+                  padding: EdgeInsets.all(30.0),
+                ),
+                Text("",
+                  style: TextStyle(color: Colors.white, fontSize: 23),textAlign: TextAlign.center,),
+                Padding(
+                  padding: EdgeInsets.all(150.0),
+                ),
+                Text("",
+                  style: TextStyle(color: Colors.white, fontSize: 23),textAlign: TextAlign.center,),
+              ],
+            ),
+          ],
+        );
       }
       return Card();
     }).toList();
@@ -142,6 +180,7 @@ class _OndeEstouState extends State<OndeEstou> {
     tiles.addAll(_buildScanResultTiles());
 
     return Scaffold(
+      backgroundColor: Colors.black,
       appBar: new AppBar(
         title: const Text('MyFriend Beacon'),
         actions: <Widget>[

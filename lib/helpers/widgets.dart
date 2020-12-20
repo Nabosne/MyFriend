@@ -17,11 +17,14 @@ class IBeaconCard extends StatelessWidget {
         children: <Widget>[
           Text("iBeacon"),
           Text("uuid: ${iBeacon.uuid}"),
+
           Text("major: ${iBeacon.major}"),
           Text("minor: ${iBeacon.minor}"),
           Text("tx: ${iBeacon.tx}"),
           Text("rssi: ${iBeacon.rssi}"),
-          Text("distance: ${iBeacon.distance}"),
+          Text("distance: ${iBeacon.distance.toStringAsFixed(3)}"),
+          Text("txAt1Meter: ${iBeacon.txAt1Meter}"),
+          Text("name: ${iBeacon.name}"),
         ],
       ),
     );
@@ -43,7 +46,6 @@ class EddystoneUIDCard extends StatelessWidget {
           Text("namespaceId: ${eddystoneUID.namespaceId}"),
           Text("tx: ${eddystoneUID.tx}"),
           Text("rssi: ${eddystoneUID.rssi}"),
-          Text("distance: ${eddystoneUID.distance}"),
         ],
       ),
     );
