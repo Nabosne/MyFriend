@@ -1,16 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
+const request = "http://myfriend.pythonanywhere.com/web/service/locais/";
+
+
+Future<Map> getData() async {
+  http.Response response = await http.get(request);
+  return json.decode(response.body);
+}
 
 class Locais extends StatefulWidget {
-  Locais({Key key, this.title}) : super(key: key);
-
-  final String title;
-
   @override
   _Locais createState() => _Locais();
 }
 
 class _Locais extends State<Locais> {
+  String nome;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -18,62 +25,44 @@ class _Locais extends State<Locais> {
         appBar: AppBar(
           title: Text('Locais'),
         ),
-        body: Center(child: widgetColumn()));
+        body: FutureBuilder(
+          future: getData(),
+          builder: (context, snapshot) {
+            switch (snapshot.connectionState) {
+              case ConnectionState.none:
+              case ConnectionState.waiting:
+              return Center(
+                child: Text(
+                  "Carregando...",
+                  style: TextStyle(color: Colors.amber, fontSize: 25.0),
+                  textAlign: TextAlign.center,
+                ),
+              );
+              default:
+                if (snapshot.hasError) {
+                  return Center(
+                    child: Text(
+                      "Erro ao carregar dados =/",
+                      style: TextStyle(color: Colors.amber, fontSize: 25.0),
+                      textAlign: TextAlign.center,
+                    ),
+                  );
+                }else{
+                  print(snapshot.data);
+                  return Container(
+                    child: Column(
+                      children: [
+                        Text(
+                          snapshot.data.toString(),
+                          style: TextStyle(fontSize: 30.0, color: Colors.white),
+                        ),
+                      ],
+                    ),
+                  );
+                }
+            }
+          },
+        ));
   }
 
-  widgetColumn() {
-    return Column(
-      children: <Widget>[
-        SizedBox(
-          width: 350.0,
-          height: 80.0,
-          child: FlatButton(
-            color: Colors.black,
-            textColor: Colors.white,
-            disabledColor: Colors.grey,
-            disabledTextColor: Colors.black,
-            splashColor: Colors.blueAccent,
-            onPressed: () {},
-            child: Text(
-              "Faculdade X",
-              style: TextStyle(fontSize: 25.0),
-            ),
-          ),
-        ),
-        SizedBox(
-          width: 350.0,
-          height: 80.0,
-          child: FlatButton(
-            color: Colors.white60,
-            textColor: Colors.black,
-            disabledColor: Colors.grey,
-            disabledTextColor: Colors.black,
-            //padding: EdgeInsets.all(30.0),
-            splashColor: Colors.blueAccent,
-            onPressed: () {},
-            child: Text(
-              "Museu X",
-              style: TextStyle(fontSize: 25.0),
-            ),
-          ),
-        ),
-        SizedBox(
-          width: 350.0,
-          height: 80.0,
-          child: FlatButton(
-            color: Colors.black,
-            textColor: Colors.white,
-            disabledColor: Colors.grey,
-            disabledTextColor: Colors.black,
-            splashColor: Colors.blueAccent,
-            onPressed: () {},
-            child: Text(
-              "Shopping X",
-              style: TextStyle(fontSize: 25.0),
-            ),
-          ),
-        ),
-      ],
-    );
-  }
 }

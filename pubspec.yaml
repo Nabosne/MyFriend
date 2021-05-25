@@ -31,6 +31,7 @@ dependencies:
   flutter_blue_beacon: ^0.0.2
   splashscreen: ^1.3.5
   flutter_launcher_icons: ^0.7.0
+  http: ^0.12.2
 
 dev_dependencies:
   flutter_test:
