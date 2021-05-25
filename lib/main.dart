@@ -1,10 +1,11 @@
-import 'package:myfriend/ui/Home.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:myfriend/ui/TutorialPages/SplashScreenInitial.dart';
+
 
 void main() {
   runApp(MaterialApp(
-    home: Home(),
+    home: SplashScreenTutorial(),
     title: "My Friend",
     debugShowCheckedModeBanner: false,
     theme: ThemeData(

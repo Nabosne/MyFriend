@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:myfriend/ui/DescreverEspaco.dart';
+import 'package:myfriend/ui/Destinos.dart';
+import 'package:myfriend/ui/Locais.dart';
 import 'package:myfriend/ui/OndeEstou.dart';
 import 'package:myfriend/ui/Tutorial.dart';
-import 'package:myfriend/ui/Locais.dart';
-import 'package:myfriend/ui/Destinos.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -21,7 +21,7 @@ class _HomeState extends State<Home> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        title: Text("MyFriend"),
+        title: Text("Menu"),
         backgroundColor: Colors.blue,
         centerTitle: true,
       ),

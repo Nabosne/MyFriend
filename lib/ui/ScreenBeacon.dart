@@ -26,9 +26,7 @@ class _ScreenBeaconState extends State<ScreenBeacon> {
               padding: EdgeInsets.all(30.0),
             ),
             Text(
-              beacon1 == widget.iBeacon.uuid || widget.iBeacon.uuid != null
-                  ? "Você está próximo de um My friend! =) "
-                  : "Nenhum my friend proximo \n=(",
+              "Você está próximo de um My friend! =) ",
               style: TextStyle(color: Colors.white, fontSize: 23),
               textAlign: TextAlign.center,
             ),
@@ -41,17 +39,13 @@ class _ScreenBeaconState extends State<ScreenBeacon> {
               padding: EdgeInsets.all(30.0),
             ),
             Text(
-                beacon1 == widget.iBeacon.uuid  || widget.iBeacon.uuid != null
-                    ? "Você está a ${widget.iBeacon.distance.toStringAsFixed(2)} metros do Myfriend mais proximo"
-                    : "",
+                "Você está a ${widget.iBeacon.distance.toStringAsFixed(2)} metros do Myfriend mais proximo",
                 style: TextStyle(color: Colors.white, fontSize: 23),textAlign: TextAlign.center,),
             Padding(
               padding: EdgeInsets.all(150.0),
             ),
             Text(
-                beacon1 == widget.iBeacon.uuid || widget.iBeacon.uuid != null
-                    ? "Destino: Banheiro da casa do João"
-                    : "",
+                 "Destino: Banheiro da casa do João",
                 style: TextStyle(color: Colors.white, fontSize: 23),textAlign: TextAlign.center,),
           ],
         ),
