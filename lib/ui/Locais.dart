@@ -1,14 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
+import 'package:myfriend/API/Requisicoes.dart';
 
 const request = "http://myfriend.pythonanywhere.com/web/service/locais/";
-
-
-Future<Map> getData() async {
-  http.Response response = await http.get(request);
-  return json.decode(response.body);
-}
 
 class Locais extends StatefulWidget {
   @override
@@ -16,7 +9,6 @@ class Locais extends StatefulWidget {
 }
 
 class _Locais extends State<Locais> {
-  String nome;
 
   @override
   Widget build(BuildContext context) {
