@@ -5,7 +5,7 @@ import 'package:myfriend/ui/TutorialPages/SplashScreenInitial.dart';
 
 void main() {
   runApp(MaterialApp(
-    home: SplashScreenTutorial(),
+    home: SplashScreenInitial(),
     title: "My Friend",
     debugShowCheckedModeBanner: false,
     theme: ThemeData(
