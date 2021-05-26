@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_blue/flutter_blue.dart';
@@ -19,6 +20,7 @@ class _OndeEstouState extends State<OndeEstou> {
   StreamSubscription _scanSubscription;
   Map<int, Beacon> beacons = new Map();
   bool isScanning = false;
+  bool isFirst = true;
 
   /// State
   StreamSubscription _stateSubscription;
@@ -49,16 +51,10 @@ class _OndeEstouState extends State<OndeEstou> {
     super.dispose();
   }
 
-  _clearAllBeacons() {
-    setState(() {
-      beacons = Map<int, Beacon>();
-    });
-  }
-
   _startScan() {
     print("Scanning now");
     _scanSubscription = flutterBlueBeacon
-        .scan()
+        .scan(timeout: const Duration(seconds: 5))
         .listen((beacon) {
       print('localName: ${beacon.scanResult.advertisementData.localName}');
       print(
@@ -69,85 +65,35 @@ class _OndeEstouState extends State<OndeEstou> {
       });
     }, onDone: _stopScan);
 
-    setState(() {
-      isScanning = true;
-    });
+    //setState(() {
+    //  isScanning = true;
+    //});
   }
 
   _stopScan() {
     print("Scan stopped");
     _scanSubscription?.cancel();
     _scanSubscription = null;
-    setState(() {
-      isScanning = false;
-    });
+    //setState(() {
+    //  isScanning = false;
+    //});
   }
 
-  _buildScanningButton() {
-    if (state != BluetoothState.on) {
-      return null;
-    }
-    if (isScanning) {
-      return new FloatingActionButton(
-        child: new Icon(Icons.stop),
-        onPressed: _stopScan,
-        backgroundColor: Colors.red,
-      );
-    } else {
-      return new FloatingActionButton(
-          child: new Icon(Icons.search), onPressed: _startScan);
-    }
-  }
+  _returnBeacon() {
 
-  _buildScanResultTiles() {
-
-    return beacons.values.map<Widget>((b) {
+    return beacons.values.map<Map>((b) {
       if (b is IBeacon) {
-        return ScreenBeacon(iBeacon: b);
+        Map<String, String> beacons = {
+          'beacon_local': b.major.toString(),
+          'beacon_espaco': b.minor.toString(),
+          'distancia': b.distance.toString()};
+        return beacons;
 
       }
-      if (b is EddystoneUID) {
-        return EddystoneUIDCard(eddystoneUID: b);
+      else{
+        return null;
       }
-      if (b is EddystoneEID) {
-        return EddystoneEIDCard(eddystoneEID: b);
-      }
-      if (b == null || b.distance == "") {
-        return Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Padding(
-                  padding: EdgeInsets.all(30.0),
-                ),
-                Text("Nenhum my friend proximo \n=(",
-                  style: TextStyle(color: Colors.white, fontSize: 23),
-                  textAlign: TextAlign.center,
-                ),
-                /*Text("iBeacon"),
-            Text("major: ${iBeacon.major}"),
-            Text("minor: ${iBeacon.minor}"),
-            Text("tx: ${iBeacon.tx}"),
-            Text("rssi: ${iBeacon.rssi}"),*/
-                Padding(
-                  padding: EdgeInsets.all(30.0),
-                ),
-                Text("",
-                  style: TextStyle(color: Colors.white, fontSize: 23),textAlign: TextAlign.center,),
-                Padding(
-                  padding: EdgeInsets.all(150.0),
-                ),
-                Text("",
-                  style: TextStyle(color: Colors.white, fontSize: 23),textAlign: TextAlign.center,),
-              ],
-            ),
-          ],
-        );
-      }
-      return Card();
+
     }).toList();
   }
 
@@ -173,26 +119,38 @@ class _OndeEstouState extends State<OndeEstou> {
   @override
   Widget build(BuildContext context) {
     var tiles = new List<Widget>();
+    List<dynamic> map;
     if (state != BluetoothState.on) {
       tiles.add(_buildAlertTile());
     }
+    if(isFirst) {
+      _startScan();
+      isFirst = false;
+    }
+    map = _returnBeacon();
+    if(map.isNotEmpty){
+      print(map);
+      _stopScan();
+      //implementação do serviço aqui
+    }
+    print(map);
 
-    tiles.addAll(_buildScanResultTiles());
+
 
     return Scaffold(
       backgroundColor: Colors.black,
       appBar: new AppBar(
-        title: const Text('MyFriend Beacon'),
+        title: const Text('Onde estou'),
         actions: <Widget>[
-          IconButton(icon: Icon(Icons.clear), onPressed: _clearAllBeacons)
+          IconButton(icon: Icon(Icons.clear), onPressed: null)
         ],
       ),
-      floatingActionButton: _buildScanningButton(),
       body: new Stack(
         children: <Widget>[
           (isScanning) ? _buildProgressBarTile() : new Container(),
-          new ListView(
-            children: tiles,
+          Center(
+            child: Text(map.toString(), style: TextStyle(color: Colors.white)),
+
           )
         ],
       ),
