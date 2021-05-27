@@ -1,63 +1,53 @@
 import 'package:flutter/material.dart';
-
+import 'package:myfriend/model/DestinosModel.dart';
+import 'package:myfriend/API/Requisicoes.dart';
 
 class Destinos extends StatefulWidget {
-  Destinos({Key key, this.title}) : super(key: key);
-
-  final String title;
-
   @override
-  _Destinos createState() => _Destinos();
+  _DestinosState createState() => _DestinosState();
 }
 
-class _Destinos extends State<Destinos> {
+class _DestinosState extends State<Destinos> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.black,
-        appBar: AppBar(
-          title: Text('Destinos'),
-        ),
-        body: Center(child: widgetColumn()));
-  }
-
-  widgetColumn() {
-    return Column(
-      children: <Widget>[
-        SizedBox(
-          width: 350.0,
-          height: 80.0,
-          child: FlatButton(
-            color: Colors.black,
-            textColor: Colors.white,
-            disabledColor: Colors.grey,
-            disabledTextColor: Colors.black,
-            splashColor: Colors.blueAccent,
-            onPressed: () {},
-            child: Text(
-              "Banheiro",
-              style: TextStyle(fontSize: 25.0),
-            ),
-          ),
-        ),
-        SizedBox(
-          width: 350.0,
-          height: 80.0,
-          child: FlatButton(
-            color: Colors.white60,
-            textColor: Colors.black,
-            disabledColor: Colors.grey,
-            disabledTextColor: Colors.black,
-            //padding: EdgeInsets.all(30.0),
-            splashColor: Colors.blueAccent,
-            onPressed: () {},
-            child: Text(
-              "Secretaria",
-              style: TextStyle(fontSize: 25.0),
-            ),
-          ),
-        )
-      ],
+      backgroundColor: Colors.black,
+      appBar: AppBar(
+        title: Text('Destinos'),
+      ),
+      body: Container(
+        child: FutureBuilder<DestinosModel>(
+            future: postDestinos("0", "1"),
+            builder: (context, snapshot) {
+              switch (snapshot.connectionState) {
+                case ConnectionState.waiting:
+                case ConnectionState.none:
+                  return Center(
+                    child: Text(
+                      "Carregando...",
+                      style: TextStyle(color: Colors.white, fontSize: 25.0),
+                      textAlign: TextAlign.center,
+                    ),
+                  );
+                default:
+                  print(snapshot.data);
+                  return Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: snapshot.data.destinos
+                        .map((e) => Column(
+                      children: [
+                        Text(e.nome,
+                            style: TextStyle(
+                                color: Colors.white, fontSize: 25.0),
+                            textAlign: TextAlign.center)
+                      ],
+                    ),
+                    )
+                        .toList(),
+                  );
+              }
+            }),
+      ),
     );
   }
 }
