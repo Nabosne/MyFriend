@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:myfriend/API/Requisicoes.dart';
 import 'package:myfriend/model/LocaisModel.dart';
 
+import 'Home.dart';
+
 const request = "http://myfriend.pythonanywhere.com/web/service/locais/";
 
 class Locais extends StatefulWidget {
@@ -42,8 +44,12 @@ class _Locais extends State<Locais> {
                           Container(
                             alignment: Alignment.center,
                             child:
-                            Text(e.nome, style: TextStyle(color: Colors.white, fontSize: 25.0),
-                              textAlign: TextAlign.center,)),
+                            FlatButton( child: Text(e.nome, style: TextStyle(color: Colors.white, fontSize: 25.0),
+                                textAlign: TextAlign.center), onPressed: () {
+                              print(e.texto);
+                              print(e.telefone);
+                              Navigator.push(
+                                context, MaterialPageRoute(builder: (context) => Home())); },)),
                           )
                           .toList(),
                     );
