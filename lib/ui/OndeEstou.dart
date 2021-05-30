@@ -138,7 +138,7 @@ class _OndeEstouState extends State<OndeEstou> {
         String resultado="blublu";
         switch (snapshot.connectionState) {
           case ConnectionState.waiting:
-            print("waiting");
+            print("waiting_2");
             resultado = "carregando";
             return _returnScaffold(resultado);
           case ConnectionState.none:
