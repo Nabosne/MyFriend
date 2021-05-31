@@ -100,7 +100,10 @@ class _Locais extends State<Locais> {
                               style: TextStyle(
                                   color: Colors.black, fontSize: 25.0),
                               textAlign: TextAlign.justify),
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.push(context,
+                                MaterialPageRoute(builder: (context) => Home()));
+                          },
                         ),
                       ),
                     ],
