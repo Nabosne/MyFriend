@@ -35,6 +35,7 @@ class Destinos {
 class Percursos {
   String espacoInicio;
   String espacoFim;
+  int idEspacoInicio;
   int sequencia;
   String instrucao;
 
@@ -43,6 +44,7 @@ class Percursos {
 
   Percursos.fromJson(Map<String, dynamic> json) {
     espacoInicio = json['espaco_inicio'];
+    idEspacoInicio = json['id_espaco_inicio'];
     espacoFim = json['espaco_fim'];
     sequencia = json['sequencia'];
     instrucao = json['instrucao'];

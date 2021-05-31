@@ -9,12 +9,20 @@ import 'package:myfriend/helpers/widgets.dart';
 import 'package:myfriend/model/OndeEstouModel.dart';
 import 'package:myfriend/ui/ScreenBeacon.dart';
 
-class OndeEstou extends StatefulWidget {
+import 'package:myfriend/model/DestinosModel.dart';
+
+class Percurso extends StatefulWidget {
+
+  Destinos destino;
+  int position;
+
+  Percurso(this.destino, this.position);
   @override
-  _OndeEstouState createState() => _OndeEstouState();
+  _PercursoState createState() => _PercursoState();
 }
 
-class _OndeEstouState extends State<OndeEstou> {
+class _PercursoState extends State<Percurso> {
+
   FlutterBlueBeacon flutterBlueBeacon = FlutterBlueBeacon.instance;
   FlutterBlue _flutterBlue = FlutterBlue.instance;
 
@@ -82,7 +90,6 @@ class _OndeEstouState extends State<OndeEstou> {
     print("Scan stopped");
     _scanSubscription?.cancel();
     _scanSubscription = null;
-    return _returnScaffold(message);
   }
 
   _returnBeacon() {
@@ -130,55 +137,6 @@ class _OndeEstouState extends State<OndeEstou> {
     return new LinearProgressIndicator();
   }
 
-  _callService() {
-    print("call webservice");
-    return FutureBuilder<OndeEstouModel> (
-      future: postOndeEstou(beacon["beacon_local"], beacon["beacon_espaco"]),
-      builder: (context, snapshot) {
-        String resultado="blublu";
-        switch (snapshot.connectionState) {
-          case ConnectionState.waiting:
-            print("waiting_2");
-            resultado = "carregando";
-            return _returnScaffold(resultado);
-          case ConnectionState.none:
-            print("waiting");
-            return _returnScaffold(resultado);
-          case ConnectionState.done:
-            print("conexão");
-            if (snapshot.hasError) {
-              resultado = "ERROR";
-            } else {
-              print("sem erro");
-            }
-            return _returnScaffold(resultado);
-          default:
-            print("default");
-            return _returnScaffold(resultado);
-        }
-        //return _returnScaffold(resultado);
-      });
-
-    }
-
-  _returnScaffold(String msg) {
-    return Scaffold(
-        backgroundColor: Colors.black,
-        appBar: AppBar(
-          title: Text('Onde Estou'),
-        ),
-        body: Container(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(msg,
-                  style: TextStyle(color: Colors.white, fontSize: 25.0),
-                  textAlign: TextAlign.center,),
-              ],
-            )));
-  }
-
-
   @override
   Widget build(BuildContext context) {
     var tiles = new List<Widget>();
@@ -201,48 +159,54 @@ class _OndeEstouState extends State<OndeEstou> {
         print("Local não encontrado");
         message = "Local não encontrado";
       }
-      return _returnScaffold(message);
     });
-    if(callService){
-      isFirst=false;
+
+    if(callService) {
+      isFirst = false;
       callService = false;
-      return Scaffold(
+      if (widget.destino.percursos[widget.position].idEspacoInicio.toString() ==
+          beacon["beacon_espaco"]) {
+        return Scaffold(
+            backgroundColor: Colors.black,
+            appBar: AppBar(
+              title: Text('Percurso'),
+            ),
+            body: Container(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(widget.destino.percursos[widget.position].instrucao,
+                      style: TextStyle(color: Colors.white, fontSize: 25.0),
+                      textAlign: TextAlign.center,),
+                    FlatButton(child: Text("Próximo",
+                        style: TextStyle(color: Colors.white, fontSize: 25.0),
+                        textAlign: TextAlign.center), onPressed: () {
+                      Navigator.push(
+                          context, MaterialPageRoute(builder: (context) =>
+                          Percurso(widget.destino, widget.position + 1)));
+                    },)
+                  ],
+                )));
+      } else {
+        message = "Caminho errado";
+      }
+    }
+      else{
+      message = "Caminho errado";
+    }
+    return Scaffold(
         backgroundColor: Colors.black,
         appBar: AppBar(
-          title: Text('Onde estou'),
+          title: Text('Onde Estou'),
         ),
         body: Container(
-          child: FutureBuilder<OndeEstouModel>(
-              future: postOndeEstou(beacon["beacon_local"], beacon["beacon_espaco"]),
-              builder: (context, snapshot) {
-                switch (snapshot.connectionState) {
-                  case ConnectionState.waiting:
-                  case ConnectionState.none:
-                    return Center(
-                      child: Text(
-                        message,
-                        style: TextStyle(color: Colors.white, fontSize: 25.0),
-                        textAlign: TextAlign.center,
-                      ),
-                    );
-                  default:
-                    print(snapshot.data.texto);
-                    message = snapshot.data.texto;
-                    return Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(snapshot.data.texto+beacon["distancia"],
-                          style: TextStyle(color: Colors.white, fontSize: 25.0),
-                          textAlign: TextAlign.center,),
-                    ]);
-                }
-              }),
-        ),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(message,
+                  style: TextStyle(color: Colors.white, fontSize: 25.0),
+                  textAlign: TextAlign.center,),
+              ],
+            )));
 
-      );
-    }
-    return _returnScaffold(message);
-
-  }
-
-}
+}}

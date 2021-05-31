@@ -8,6 +8,7 @@ import 'package:myfriend/model/DestinosModel.dart';
 import 'package:myfriend/model/OndeEstouModel.dart';
 
 import 'Home.dart';
+import 'Percurso.dart';
 
 class Destinos extends StatefulWidget {
   @override
@@ -27,6 +28,7 @@ class _DestinosState extends State<Destinos> {
   bool isFirst = true;
   bool callService = false;
   OndeEstouModel odObject;
+  int position = 0;
 
   /// State
   StreamSubscription _stateSubscription;
@@ -238,11 +240,12 @@ class _DestinosState extends State<Destinos> {
                               child:
                               FlatButton( child: Text(e.nome, style: TextStyle(color: Colors.white, fontSize: 25.0),
                                   textAlign: TextAlign.center), onPressed: () {
-                                  print(e.percursos[0].instrucao);
-                                  print(e.percursos[0].espacoInicio);
-                                  var percursos = e.percursos;
+                                if(e.percursos[position].idEspacoInicio.toString() == beacon["beacon_espaco"]){
                                   Navigator.push(
-                                      context, MaterialPageRoute(builder: (context) => Home()));
+                                      context, MaterialPageRoute(builder: (context) => Percurso(e, 0)));
+                                }else{
+                                  print("posição de inicio incorreta");
+                                }
                               },)),
                       )
                           .toList(),
