@@ -24,6 +24,7 @@ class _HomeState extends State<Home> {
         title: Text("Menu"),
         backgroundColor: Colors.blue,
         centerTitle: true,
+        automaticallyImplyLeading: false,
       ),
       body: GridView.count(
         padding: EdgeInsets.zero,
