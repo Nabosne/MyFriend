@@ -30,59 +30,85 @@ class _Locais extends State<Locais> {
           ),
         ),
         body: Container(
-          child: FutureBuilder<LocaisModel>(
-              future: getLocais(),
-              builder: (context, snapshot) {
-                switch (snapshot.connectionState) {
-                  case ConnectionState.waiting:
-                  case ConnectionState.none:
-                    return Center(
-                      child: Text(
-                        "Carregando...",
-                        style: TextStyle(color: Colors.white, fontSize: 25.0),
-                        textAlign: TextAlign.center,
-                      ),
-                    );
-                  default:
-                    print(snapshot.data.locais
-                        .map((e) => e.beaconLocal)
-                        .toList());
-                    return Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: snapshot.data.locais
-                          .map(
-                            (e) => Column(
-                              children: [
-                                Row(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              FutureBuilder<LocaisModel>(
+                  future: getLocais(),
+                  builder: (context, snapshot) {
+                    switch (snapshot.connectionState) {
+                      case ConnectionState.waiting:
+                      case ConnectionState.none:
+                        return Center(
+                          child: Text(
+                            "Carregando...",
+                            style:
+                                TextStyle(color: Colors.white, fontSize: 25.0),
+                            textAlign: TextAlign.center,
+                          ),
+                        );
+                      default:
+                        print(snapshot.data.locais
+                            .map((e) => e.beaconLocal)
+                            .toList());
+                        return Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: snapshot.data.locais
+                              .map(
+                                (e) => Column(
                                   children: [
-                                    Expanded(
-                                        child: FlatButton(
-                                      color: Colors.white,
-                                      child: Text(e.nome,
-                                          style: TextStyle(
-                                              color: Colors.black,
-                                              fontSize: 25.0),
-                                          textAlign: TextAlign.justify),
-                                      onPressed: () {
-                                        print(e.texto);
-                                        print(e.telefone);
-                                        Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder: (context) =>
-                                                    _telaDadosLocais(e.nome,
-                                                        e.texto, e.telefone)));
-                                      },
-                                    )),
+                                    Row(
+                                      children: [
+                                        Expanded(
+                                            child: FlatButton(
+                                          color: Colors.white,
+                                          child: Text(e.nome,
+                                              style: TextStyle(
+                                                  color: Colors.black,
+                                                  fontSize: 25.0),
+                                              textAlign: TextAlign.justify),
+                                          onPressed: () {
+                                            print(e.texto);
+                                            print(e.telefone);
+                                            Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        _telaDadosLocais(
+                                                            e.nome,
+                                                            e.texto,
+                                                            e.telefone)));
+                                          },
+                                        )),
+                                      ],
+                                    ),
                                   ],
                                 ),
-                              ],
-                            ),
-                          )
-                          .toList(),
-                    );
-                }
-              }),
+                              )
+                              .toList(),
+                        );
+                    }
+                  }),
+              Column(
+                children: [
+                  Row(
+                    children: [
+                      Expanded(
+                        child: FlatButton(
+                          color: Colors.white,
+                          child: Text("Voltar a tela inicial",
+                              style: TextStyle(
+                                  color: Colors.black, fontSize: 25.0),
+                              textAlign: TextAlign.justify),
+                          onPressed: () {},
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              )
+            ],
+          ),
         ));
   }
 
