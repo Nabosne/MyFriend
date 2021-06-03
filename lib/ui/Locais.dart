@@ -2,10 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:myfriend/API/Requisicoes.dart';
 import 'package:myfriend/model/LocaisModel.dart';
 import 'package:url_launcher/url_launcher.dart';
-
-import 'Home.dart';
-
-const request = "http://myfriend.pythonanywhere.com/web/service/locais/";
+import 'package:myfriend/ui/Home.dart';
 
 class Locais extends StatefulWidget {
   @override
@@ -30,8 +27,7 @@ class _Locais extends State<Locais> {
           ),
         ),
         body: Container(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+          child: Stack(
             children: [
               FutureBuilder<LocaisModel>(
                   future: getLocais(),
@@ -89,16 +85,22 @@ class _Locais extends State<Locais> {
                         );
                     }
                   }),
-              Column(
-                children: [
-                  Row(
-                    children: [
-                      Expanded(
+              Align(
+                alignment: Alignment(0, 1),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+
+                  children: [
+                    Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
                         child: FlatButton(
+                          minWidth: 130,
+                          height: 130,
                           color: Colors.white,
                           child: Text("Voltar a tela inicial",
-                              style: TextStyle(
-                                  color: Colors.black, fontSize: 25.0),
+                              style:
+                                  TextStyle(color: Colors.black, fontSize: 25.0),
                               textAlign: TextAlign.justify),
                           onPressed: () {
                             Navigator.push(context,
@@ -106,10 +108,10 @@ class _Locais extends State<Locais> {
                           },
                         ),
                       ),
-                    ],
-                  ),
-                ],
-              )
+                    ),
+                  ],
+                ),
+              ),
             ],
           ),
         ));
