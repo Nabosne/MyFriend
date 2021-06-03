@@ -1,13 +1,9 @@
 import 'dart:async';
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_blue/flutter_blue.dart';
 import 'package:flutter_blue_beacon/flutter_blue_beacon.dart';
 import 'package:myfriend/API/Requisicoes.dart';
-import 'package:myfriend/helpers/widgets.dart';
 import 'package:myfriend/model/OndeEstouModel.dart';
-import 'package:myfriend/ui/ScreenBeacon.dart';
 
 class OndeEstou extends StatefulWidget {
   @override
@@ -165,7 +161,7 @@ class _OndeEstouState extends State<OndeEstou> {
     return Scaffold(
         backgroundColor: Colors.black,
         appBar: AppBar(
-          title: Text('Onde Estou'),
+          title: Text('Onde Estou', style: TextStyle(fontSize: 25.0)),
         ),
         body: Container(
             child: Column(
@@ -209,7 +205,7 @@ class _OndeEstouState extends State<OndeEstou> {
       return Scaffold(
         backgroundColor: Colors.black,
         appBar: AppBar(
-          title: Text('Onde estou'),
+          title: Text('Onde estou', style: TextStyle(fontSize: 25.0)),
         ),
         body: Container(
           child: FutureBuilder<OndeEstouModel>(

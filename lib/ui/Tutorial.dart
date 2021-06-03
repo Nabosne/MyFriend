@@ -51,7 +51,7 @@ class Tutorial extends StatelessWidget {
     return Scaffold(
         backgroundColor: Colors.black,
         appBar: AppBar(
-          title: Text('Tutorial'),
+          title: Text('Tutorial', style: TextStyle(fontSize: 25.0)),
           centerTitle: true,
         ),
         body: PageView(
@@ -98,7 +98,7 @@ class Tutorial extends StatelessWidget {
                     padding: const EdgeInsets.all(8.0),
                     child: Text(
                       descricao,
-                      style: TextStyle(fontSize: 20.0, color: Colors.white),
+                      style: TextStyle(fontSize: 25.0, color: Colors.white),
                       textAlign: TextAlign.center,
                     ),
                   ),

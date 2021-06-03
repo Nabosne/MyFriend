@@ -15,7 +15,7 @@ class _Locais extends State<Locais> {
     return Scaffold(
         backgroundColor: Colors.black,
         appBar: AppBar(
-          title: Text('Locais'),
+          title: Text('Locais',style: TextStyle(fontSize: 25.0)),
           leading: IconButton(
             icon: const Icon(
               Icons.arrow_back,

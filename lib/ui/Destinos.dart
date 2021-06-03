@@ -1,14 +1,11 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_blue/flutter_blue.dart';
 import 'package:flutter_blue_beacon/flutter_blue_beacon.dart';
 import 'package:myfriend/API/Requisicoes.dart';
 import 'package:myfriend/model/DestinosModel.dart';
 import 'package:myfriend/model/OndeEstouModel.dart';
-
-import 'Home.dart';
-import 'Percurso.dart';
+import 'package:myfriend/ui/Percurso.dart';
 
 class Destinos extends StatefulWidget {
   @override
@@ -167,7 +164,7 @@ class _DestinosState extends State<Destinos> {
     return Scaffold(
         backgroundColor: Colors.black,
         appBar: AppBar(
-          title: Text('Onde Estou'),
+          title: Text('Destinos', style: TextStyle(fontSize: 25.0)),
         ),
         body: Container(
             child: Column(

@@ -1,6 +1,10 @@
 # myfriend
 
-A new Flutter application.
+Projeto TCC feito por GUILHERME DOS SANTOS NABOSNE e JOÃO PEDRO DOS SANTOS
+
+Universidade Positivo
+#TODO#
+
 
 ## Getting Started
 

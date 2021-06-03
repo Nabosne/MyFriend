@@ -21,7 +21,7 @@ class _HomeState extends State<Home> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        title: Text("Menu"),
+        title: Text("Menu", style: TextStyle(fontSize: 25.0)),
         backgroundColor: Colors.blue,
         centerTitle: true,
         automaticallyImplyLeading: false,
@@ -68,7 +68,7 @@ class _HomeState extends State<Home> {
       color: buttonColor,
       child: Text(
         label,
-        style: TextStyle(color: textColor, fontSize: 15.0),
+        style: TextStyle(color: textColor, fontSize: 25.0),
         textAlign: TextAlign.center,
       ),
       onPressed: () {

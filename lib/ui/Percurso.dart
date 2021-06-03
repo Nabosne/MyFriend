@@ -1,13 +1,9 @@
 import 'dart:async';
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_blue/flutter_blue.dart';
 import 'package:flutter_blue_beacon/flutter_blue_beacon.dart';
-import 'package:myfriend/API/Requisicoes.dart';
-import 'package:myfriend/helpers/widgets.dart';
 import 'package:myfriend/model/OndeEstouModel.dart';
-import 'package:myfriend/ui/ScreenBeacon.dart';
+
 
 import 'package:myfriend/model/DestinosModel.dart';
 
@@ -169,7 +165,7 @@ class _PercursoState extends State<Percurso> {
         return Scaffold(
             backgroundColor: Colors.black,
             appBar: AppBar(
-              title: Text('Percurso'),
+              title: Text('Percurso', style: TextStyle(fontSize: 25.0)),
             ),
             body: Container(
                 child: Column(
@@ -197,7 +193,7 @@ class _PercursoState extends State<Percurso> {
     return Scaffold(
         backgroundColor: Colors.black,
         appBar: AppBar(
-          title: Text('Onde Estou'),
+          title: Text('Percurso', style: TextStyle(fontSize: 25.0)),
         ),
         body: Container(
             child: Column(
