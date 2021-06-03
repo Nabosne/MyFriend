@@ -15,12 +15,14 @@ const requestOndeEstou = "http://myfriend.pythonanywhere.com/web/service/ondeest
 Future<LocaisModel> getLocais() async {
   http.Response response = await http.get(requestLocais);
   final jsonResponse = json.decode(response.body);
+  print(jsonResponse);
   return LocaisModel.fromJson(jsonResponse);
 }
 
 Future<DescreverEspacoModel>postDescreverEspaco(String beaconLocal, String beaconEspaco) async {
   http.Response response = await http.post(requestDescrever, body: {'beacon_local': beaconLocal, 'beacon_espaco': beaconEspaco});
   final jsonResponse = json.decode(response.body);
+  print(jsonResponse);
   return DescreverEspacoModel.fromJson(jsonResponse);
 }
 
@@ -34,5 +36,6 @@ Future<DestinosModel>postDestinos(String beaconLocal, String beaconEspaco) async
 Future<OndeEstouModel>postOndeEstou(String beaconLocal, String beaconEspaco) async {
   http.Response response = await http.post(requestOndeEstou, body: {'beacon_local': beaconLocal, 'beacon_espaco': beaconEspaco});
   final jsonResponse = json.decode(response.body);
+  print(jsonResponse);
   return OndeEstouModel.fromJson(jsonResponse);
 }
