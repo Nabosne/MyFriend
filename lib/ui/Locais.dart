@@ -88,8 +88,6 @@ class _Locais extends State<Locais> {
               Align(
                 alignment: Alignment(0, 1),
                 child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.end,
-
                   children: [
                     Expanded(
                       child: Padding(
