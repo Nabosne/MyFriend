@@ -4,6 +4,69 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_blue_beacon/flutter_blue_beacon.dart';
+import 'package:myfriend/ui/Home.dart';
+
+class MenuButton extends StatelessWidget {
+
+  @override
+  Widget build(BuildContext context) {
+    return Align(
+      alignment: Alignment(0, 1),
+      child: Row(
+        children: [
+          Expanded(
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: FlatButton(
+                minWidth: 130,
+                height: 130,
+                color: Colors.white,
+                child: Text("Voltar ao menu",
+                    style:
+                    TextStyle(color: Colors.black, fontSize: 30.0),
+                    textAlign: TextAlign.justify),
+                onPressed: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => Home()));
+                },
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class TelaPadrao extends StatelessWidget {
+
+  String title;
+  String text;
+
+  TelaPadrao(this.title, this.text);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        backgroundColor: Colors.black,
+        appBar: AppBar(
+          title: Text(title, style: TextStyle(fontSize: 25.0)),
+        ),
+        body: Container(
+            child: Stack(
+              children: [Center(
+                  child: Text(text,
+                    style: TextStyle(color: Colors.white, fontSize: 25.0),
+                    textAlign: TextAlign.center,)),
+                MenuButton(),
+              ],
+            )
+        ));
+  }
+}
+
+
+
 
 class IBeaconCard extends StatelessWidget {
   final IBeacon iBeacon;
