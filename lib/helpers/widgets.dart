@@ -18,8 +18,8 @@ class MenuButton extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: FlatButton(
-                minWidth: 130,
-                height: 130,
+                minWidth: 80,
+                height: 80,
                 color: Colors.white,
                 child: Text("Voltar ao menu",
                     style:

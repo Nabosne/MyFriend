@@ -88,15 +88,11 @@ class _DescreverEspacoState extends State<DescreverEspaco> {
 
   _callService() {
     cont++;
-    print("call webservice");
     if (beacon == null) {
-      print("null");
       return TelaPadrao("Descrever espaço", "Não identificamos um local My Friend próximo a você.");
     }else if(cont<4){
-      print("timer");
       return TelaPadrao("Descrever espaço", "Buscando");
     }else {
-      print("chamando");
       return Scaffold(
         backgroundColor: Colors.black,
         appBar: AppBar(
