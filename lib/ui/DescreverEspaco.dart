@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_blue_beacon/flutter_blue_beacon.dart';
+import 'package:myfriend/helpers/widgets.dart';
 import 'package:myfriend/model/DescreverEspacoModel.dart';
 import 'package:myfriend/API/Requisicoes.dart';
 import 'dart:async';
 import 'package:flutter_blue/flutter_blue.dart';
-import 'package:myfriend/model/OndeEstouModel.dart';
 
 class DescreverEspaco extends StatefulWidget {
   @override
@@ -19,11 +19,9 @@ class _DescreverEspacoState extends State<DescreverEspaco> {
   StreamSubscription _scanSubscription;
   Map<int, Beacon> beacons = new Map();
   Map<String, String> beacon;
-  String message = "Buscando local";
-  bool scann = true;
-  bool isFirst = true;
-  bool callService = false;
-  OndeEstouModel odObject;
+  String message = "";
+  bool scanned = false;
+  int cont = 0;
 
   /// State
   StreamSubscription _stateSubscription;
@@ -32,13 +30,11 @@ class _DescreverEspacoState extends State<DescreverEspaco> {
   @override
   void initState() {
     super.initState();
-    // Immediately get the state of FlutterBlue
     _flutterBlue.state.then((s) {
       setState(() {
         state = s;
       });
     });
-    // Subscribe to state changes
     _stateSubscription = _flutterBlue.onStateChanged().listen((s) {
       setState(() {
         state = s;
@@ -55,127 +51,56 @@ class _DescreverEspacoState extends State<DescreverEspaco> {
     super.dispose();
   }
 
-  _startScan() {
-    print("Scanning now");
+  _startScan() async {
     _scanSubscription = flutterBlueBeacon
         .scan(timeout: const Duration(seconds: 5))
         .listen((beacon) {
-      print('localName: ${beacon.scanResult.advertisementData.localName}');
-      print(
-          'manufacturerData: ${beacon.scanResult.advertisementData
-              .manufacturerData}');
-      print('serviceData: ${beacon.scanResult.advertisementData.serviceData}');
       setState(() {
         beacons[beacon.hash] = beacon;
       });
     }, onDone: _stopScan);
-
-    //setState(() {
-    //  isScanning = true;
-    //});
+    scanned = true;
   }
 
   _stopScan() {
-    print("Scan stopped");
     _scanSubscription?.cancel();
     _scanSubscription = null;
-    return _returnScaffold(message);
   }
 
   _returnBeacon() {
     var distance = 100.00;
-
     for (Beacon b in beacons.values) {
       if (b is IBeacon) {
         if (b.distance < distance) {
-          print("populando beacon"+b.major.toString());
           distance = b.distance;
+          var distanceTxt = distance < 1 ? "" : ". À "+distance.toStringAsFixed(2)+ " metros.";
           Map<String, String> nearBeacon = {
             'beacon_local': b.major.toString(),
             'beacon_espaco': b.minor.toString(),
-            'distancia': b.distance.toString()};
+            'distancia': distanceTxt};
           beacon = nearBeacon;
         }
       }
     }
   }
 
-  _buildAlertTile() {
-    return new Container(
-      color: Colors.redAccent,
-      child: new ListTile(
-        title: new Text(
-          'Bluetooth adapter is ${state.toString().substring(15)}',
-          style: Theme
-              .of(context)
-              .primaryTextTheme
-              .subhead,
-        ),
-        trailing: new Icon(
-          Icons.error,
-          color: Theme
-              .of(context)
-              .primaryTextTheme
-              .subhead
-              .color,
-        ),
-      ),
-    );
-  }
-
-  _buildProgressBarTile() {
-    return new LinearProgressIndicator();
-  }
-
-  _returnScaffold(String msg) {
-    return Scaffold(
-        backgroundColor: Colors.black,
-        appBar: AppBar(
-          title: Text('Descrever espaço', style: TextStyle(fontSize: 25.0)),
-        ),
-        body: Container(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(msg,
-                  style: TextStyle(color: Colors.white, fontSize: 25.0),
-                  textAlign: TextAlign.center,),
-              ],
-            )));
-  }
 
 
-  @override
-  Widget build(BuildContext context) {
-    var tiles = new List<Widget>();
-    if (state != BluetoothState.on) {
-      tiles.add(_buildAlertTile());
-    }
-    if (scann) {
-      _startScan();
-      scann = false;
-    }
-    if(isFirst){
-      _returnBeacon();
-    }
-
-
-    Future.delayed(const Duration(seconds: 2), () {
-      if (beacon != null) {
-        callService = true;
-      } else {
-        print("Local não encontrado");
-        message = "Local não encontrado";
-      }
-      return _returnScaffold(message);
-    });
-    if(callService){
-      isFirst=false;
-      callService = false;
+  _callService() {
+    cont++;
+    print("call webservice");
+    if (beacon == null) {
+      print("null");
+      return TelaPadrao("Descrever espaço", "Não identificamos um local My Friend próximo a você.");
+    }else if(cont<4){
+      print("timer");
+      return TelaPadrao("Descrever espaço", "Buscando");
+    }else {
+      print("chamando");
       return Scaffold(
         backgroundColor: Colors.black,
         appBar: AppBar(
-          title: Text('Descrever espaço'),
+          title: Text('Descrever espaço', style: TextStyle(fontSize: 25.0)),
         ),
         body: Container(
           child: FutureBuilder<DescreverEspacoModel>(
@@ -184,32 +109,43 @@ class _DescreverEspacoState extends State<DescreverEspaco> {
                 switch (snapshot.connectionState) {
                   case ConnectionState.waiting:
                   case ConnectionState.none:
-                    return Center(
-                      child: Text(
-                        message,
-                        style: TextStyle(color: Colors.white, fontSize: 25.0),
-                        textAlign: TextAlign.center,
-                      ),
-                    );
+                    return Stack(
+                      children: [Center(
+                          child: Text(
+                            message,
+                            style: TextStyle(color: Colors.white, fontSize: 25.0),
+                            textAlign: TextAlign.center,)),
+                        MenuButton(),
+                      ],);
                   default:
                     print(snapshot.data.texto);
                     message = snapshot.data.texto;
-                    return Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(snapshot.data.texto,
+                    return Stack(
+                      children: [Center(
+                          child: Text(snapshot.data.texto,
                             style: TextStyle(color: Colors.white, fontSize: 25.0),
-                            textAlign: TextAlign.center,),
-                        ]);
+                            textAlign: TextAlign.center,)),
+                        MenuButton(),
+                      ],);
                 }
               }),
         ),
 
       );
     }
-    return _returnScaffold(message);
-
   }
 
+
+  @override
+  Widget build(BuildContext context) {
+    if (state != BluetoothState.on) {
+      return TelaPadrao("Descrever espaço", "Favor ligar o bluetooth.");
+    }
+    if (!scanned) {
+      _startScan();
+    }
+    _returnBeacon();
+    return _callService();
+  }
 }
 

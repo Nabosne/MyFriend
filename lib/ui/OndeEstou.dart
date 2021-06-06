@@ -31,13 +31,11 @@ class _OndeEstouState extends State<OndeEstou> {
   @override
   void initState() {
     super.initState();
-    // Immediately get the state of FlutterBlue
     _flutterBlue.state.then((s) {
       setState(() {
         state = s;
       });
     });
-    // Subscribe to state changes
     _stateSubscription = _flutterBlue.onStateChanged().listen((s) {
       setState(() {
         state = s;
@@ -55,15 +53,9 @@ class _OndeEstouState extends State<OndeEstou> {
   }
 
   _startScan() async {
-    print("Scanning now");
     _scanSubscription = flutterBlueBeacon
         .scan(timeout: const Duration(seconds: 5))
         .listen((beacon) {
-      print('localName: ${beacon.scanResult.advertisementData.localName}');
-      print(
-          'manufacturerData: ${beacon.scanResult.advertisementData
-              .manufacturerData}');
-      print('serviceData: ${beacon.scanResult.advertisementData.serviceData}');
       setState(() {
         beacons[beacon.hash] = beacon;
       });
@@ -72,23 +64,21 @@ class _OndeEstouState extends State<OndeEstou> {
   }
 
   _stopScan() {
-    print("Scan stopped");
     _scanSubscription?.cancel();
     _scanSubscription = null;
   }
 
   _returnBeacon() {
     var distance = 100.00;
-
     for (Beacon b in beacons.values) {
       if (b is IBeacon) {
         if (b.distance < distance) {
-          print("populando beacon"+b.major.toString());
           distance = b.distance;
+          var distanceTxt = distance < 1 ? "" : ". À "+distance.toStringAsFixed(2)+ " metros.";
           Map<String, String> nearBeacon = {
             'beacon_local': b.major.toString(),
             'beacon_espaco': b.minor.toString(),
-            'distancia': (". À "+b.distance.toStringAsFixed(2)+ " metros.")};
+            'distancia': distanceTxt};
           beacon = nearBeacon;
         }
       }
@@ -144,7 +134,7 @@ class _OndeEstouState extends State<OndeEstou> {
 
       );
     }
-    }
+  }
 
 
   @override
@@ -155,10 +145,7 @@ class _OndeEstouState extends State<OndeEstou> {
     if (!scanned) {
       _startScan();
     }
-      _returnBeacon();
-
-      return _callService();
-
+    _returnBeacon();
+    return _callService();
   }
-
 }
