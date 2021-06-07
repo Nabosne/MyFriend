@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_blue/flutter_blue.dart';
 import 'package:flutter_blue_beacon/flutter_blue_beacon.dart';
 import 'package:myfriend/API/Requisicoes.dart';
@@ -111,24 +112,25 @@ class _DestinosState extends State<Destinos> {
                   case ConnectionState.waiting:
                   case ConnectionState.none:
                     return Stack(
-                      children: [Center(
-                      child: Text(
+                      children: [Align(
+                          alignment: Alignment(0, -1),
+                          child: Text(
                         message,
-                        style: TextStyle(color: Colors.white, fontSize: 25.0),
+                        style: TextStyle(color: Colors.white, fontSize: 30.0),
                         textAlign: TextAlign.center,)),
                         MenuButton(),
                       ],);
                   default:
                     return Stack(
                       children: [Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.start,
                       children: snapshot.data.destinos
                           .map((e) =>
                           Row(
                           children: [
                           Expanded(
                           child:
-                              FlatButton( color: Colors.white, child: Text(e.nome, style: TextStyle(color: Colors.black, fontSize: 25.0),
+                              FlatButton( color: Colors.white, child: Text(e.nome, style: TextStyle(color: Colors.black, fontSize: 30.0),
                                   textAlign: TextAlign.justify), onPressed: () {
                                 if(e.percursos[position].idEspacoInicio.toString() == beacon["beacon_espaco"]){
                                   Navigator.push(
@@ -152,6 +154,7 @@ class _DestinosState extends State<Destinos> {
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
     if (state != BluetoothState.on) {
       return TelaPadrao("Destinos", "Favor ligar o bluetooth");
     }

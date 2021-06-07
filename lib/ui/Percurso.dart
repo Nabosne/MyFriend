@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_blue/flutter_blue.dart';
 import 'package:flutter_blue_beacon/flutter_blue_beacon.dart';
 import 'package:myfriend/helpers/widgets.dart';
@@ -111,7 +112,7 @@ class _PercursoState extends State<Percurso> {
                     Align(
                       alignment: Alignment(0, -1),
                     child: Text(widget.destino.percursos[widget.position].instrucao,
-                      style: TextStyle(color: Colors.white, fontSize: 25.0),
+                      style: TextStyle(color: Colors.white, fontSize: 30.0),
                       textAlign: TextAlign.center,)),
             if(widget.destino.percursos.length > widget.position+1)
               Align(
@@ -151,6 +152,7 @@ class _PercursoState extends State<Percurso> {
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
     if (state != BluetoothState.on) {
       return TelaPadrao("Onde estou", "Favor ligar o bluetooth");
     }

@@ -50,13 +50,14 @@ class TelaPadrao extends StatelessWidget {
     return Scaffold(
         backgroundColor: Colors.black,
         appBar: AppBar(
-          title: Text(title, style: TextStyle(fontSize: 25.0)),
+          title: Text(title, style: TextStyle(fontSize: 30.0)),
         ),
         body: Container(
             child: Stack(
-              children: [Center(
+              children: [Align(
+                  alignment: Alignment(0, -1),
                   child: Text(text,
-                    style: TextStyle(color: Colors.white, fontSize: 25.0),
+                    style: TextStyle(color: Colors.white, fontSize: 30.0),
                     textAlign: TextAlign.center,)),
                 MenuButton(),
               ],

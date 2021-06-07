@@ -14,6 +14,7 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
     var mediaQueryData = MediaQuery.of(context);
     final double widthScreen = mediaQueryData.size.width;
     final double heightScreen = mediaQueryData.size.height;
@@ -68,7 +69,7 @@ class _HomeState extends State<Home> {
       color: buttonColor,
       child: Text(
         label,
-        style: TextStyle(color: textColor, fontSize: 25.0),
+        style: TextStyle(color: textColor, fontSize: 30.0),
         textAlign: TextAlign.center,
       ),
       onPressed: () {

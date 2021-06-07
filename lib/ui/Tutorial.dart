@@ -1,5 +1,6 @@
 import 'package:flutter/animation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:myfriend/ui/Home.dart';
 
 
@@ -48,6 +49,7 @@ class Tutorial extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
     return Scaffold(
         backgroundColor: Colors.black,
         appBar: AppBar(

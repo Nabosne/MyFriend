@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_blue_beacon/flutter_blue_beacon.dart';
 import 'package:myfriend/helpers/widgets.dart';
 import 'package:myfriend/model/DescreverEspacoModel.dart';
@@ -106,10 +107,11 @@ class _DescreverEspacoState extends State<DescreverEspaco> {
                   case ConnectionState.waiting:
                   case ConnectionState.none:
                     return Stack(
-                      children: [Center(
+                      children: [Align(
+                          alignment: Alignment(0, -1),
                           child: Text(
                             message,
-                            style: TextStyle(color: Colors.white, fontSize: 25.0),
+                            style: TextStyle(color: Colors.white, fontSize: 30.0),
                             textAlign: TextAlign.center,)),
                         MenuButton(),
                       ],);
@@ -117,9 +119,10 @@ class _DescreverEspacoState extends State<DescreverEspaco> {
                     print(snapshot.data.texto);
                     message = snapshot.data.texto;
                     return Stack(
-                      children: [Center(
+                      children: [Align(
+                          alignment: Alignment(0, -1),
                           child: Text(snapshot.data.texto,
-                            style: TextStyle(color: Colors.white, fontSize: 25.0),
+                            style: TextStyle(color: Colors.white, fontSize: 30.0),
                             textAlign: TextAlign.center,)),
                         MenuButton(),
                       ],);
@@ -134,6 +137,7 @@ class _DescreverEspacoState extends State<DescreverEspaco> {
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
     if (state != BluetoothState.on) {
       return TelaPadrao("Descrever espaço", "Favor ligar o bluetooth.");
     }

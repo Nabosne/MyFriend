@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:myfriend/API/Requisicoes.dart';
+import 'package:myfriend/helpers/widgets.dart';
 import 'package:myfriend/model/LocaisModel.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:myfriend/ui/Home.dart';
@@ -12,6 +14,7 @@ class Locais extends StatefulWidget {
 class _Locais extends State<Locais> {
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
     return Scaffold(
         backgroundColor: Colors.black,
         appBar: AppBar(
@@ -35,11 +38,12 @@ class _Locais extends State<Locais> {
                     switch (snapshot.connectionState) {
                       case ConnectionState.waiting:
                       case ConnectionState.none:
-                        return Center(
+                        return Align(
+                          alignment: Alignment(0, -1),
                           child: Text(
-                            "Carregando...",
+                            "Buscando",
                             style:
-                                TextStyle(color: Colors.white, fontSize: 25.0),
+                                TextStyle(color: Colors.white, fontSize: 30.0),
                             textAlign: TextAlign.center,
                           ),
                         );
@@ -48,7 +52,7 @@ class _Locais extends State<Locais> {
                             .map((e) => e.beaconLocal)
                             .toList());
                         return Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.start,
                           children: snapshot.data.locais
                               .map(
                                 (e) => Column(
@@ -61,7 +65,7 @@ class _Locais extends State<Locais> {
                                           child: Text(e.nome,
                                               style: TextStyle(
                                                   color: Colors.black,
-                                                  fontSize: 25.0),
+                                                  fontSize: 30.0),
                                               textAlign: TextAlign.justify),
                                           onPressed: () {
                                             print(e.texto);
@@ -85,31 +89,7 @@ class _Locais extends State<Locais> {
                         );
                     }
                   }),
-              Align(
-                alignment: Alignment(0, 1),
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: FlatButton(
-                          minWidth: 130,
-                          height: 130,
-                          color: Colors.white,
-                          child: Text("Voltar a tela inicial",
-                              style:
-                                  TextStyle(color: Colors.black, fontSize: 25.0),
-                              textAlign: TextAlign.justify),
-                          onPressed: () {
-                            Navigator.push(context,
-                                MaterialPageRoute(builder: (context) => Home()));
-                          },
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
+             MenuButton(),
             ],
           ),
         ));
@@ -120,8 +100,6 @@ class _Locais extends State<Locais> {
       backgroundColor: Colors.black,
       appBar: AppBar(
         title: Text(nome),
-        centerTitle: true,
-        automaticallyImplyLeading: false,
       ),
       body: Stack(
         children: [
@@ -141,16 +119,18 @@ class _Locais extends State<Locais> {
             ],
           ),
           GridView.count(
-            padding: EdgeInsets.all(5.0),
+            padding: EdgeInsets.all(4.0),
             reverse: true,
             crossAxisCount: 2,
-            children: [
+            children: [Align(
+              alignment: Alignment(0, -0.6),
+              child:
               Padding(
-                padding: const EdgeInsets.all(5.0),
+                padding: const EdgeInsets.all(4.0),
                 child: FlatButton(
                   child: Text(
-                    "Retornar para locais",
-                    style: TextStyle(fontSize: 25.0, color: Colors.black),
+                    "Voltar para locais",
+                    style: TextStyle(fontSize: 30.0, color: Colors.black),
                     textAlign: TextAlign.center,
                   ),
                   onPressed: () {
@@ -159,13 +139,16 @@ class _Locais extends State<Locais> {
                   },
                   color: Colors.white,
                 ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(5.0),
+              )),
+              Align(
+                alignment: Alignment(0, -0.6),
+                child:
+                Padding(
+                padding: const EdgeInsets.all(4.0),
                 child: FlatButton(
                   child: Text(
                     "Ligar para local",
-                    style: TextStyle(fontSize: 25.0, color: Colors.black),
+                    style: TextStyle(fontSize: 30.0, color: Colors.black),
                     textAlign: TextAlign.center,
                   ),
                   onPressed: () {
@@ -173,9 +156,10 @@ class _Locais extends State<Locais> {
                   },
                   color: Colors.white,
                 ),
-              ),
+              )),
             ],
-          )
+          ),
+          MenuButton(),
         ],
       ),
     );
