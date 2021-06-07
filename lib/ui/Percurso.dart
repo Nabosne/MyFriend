@@ -145,6 +145,8 @@ class _PercursoState extends State<Percurso> {
                   ]
             )
         );
+      }else{
+        return TelaPadrao("Percurso", "Caminho incorreto, favor recalcular a rota em destinos.");
       }
     }
   }
