@@ -123,11 +123,13 @@ class _Locais extends State<Locais> {
             reverse: true,
             crossAxisCount: 2,
             children: [Align(
-              alignment: Alignment(0, -0.6),
+              alignment: Alignment(0, -1.7),
               child:
               Padding(
                 padding: const EdgeInsets.all(4.0),
                 child: FlatButton(
+                  minWidth: 105,
+                  height: 105,
                   child: Text(
                     "Voltar para locais",
                     style: TextStyle(fontSize: 30.0, color: Colors.black),
@@ -141,11 +143,13 @@ class _Locais extends State<Locais> {
                 ),
               )),
               Align(
-                alignment: Alignment(0, -0.6),
+                alignment: Alignment(0, -1.7),
                 child:
                 Padding(
                 padding: const EdgeInsets.all(4.0),
                 child: FlatButton(
+                  minWidth: 105,
+                  height: 105,
                   child: Text(
                     "Ligar para local",
                     style: TextStyle(fontSize: 30.0, color: Colors.black),
