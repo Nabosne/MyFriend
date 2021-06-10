@@ -105,6 +105,8 @@ class _PercursoState extends State<Percurso> {
         return Scaffold(
             backgroundColor: Colors.black,
             appBar: AppBar(
+              centerTitle: true,
+              automaticallyImplyLeading: false,
               title: Text('Percurso', style: TextStyle(fontSize: 25.0)),
             ),
             body: Stack(

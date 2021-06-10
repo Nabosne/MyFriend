@@ -98,6 +98,8 @@ class _OndeEstouState extends State<OndeEstou> {
       return Scaffold(
         backgroundColor: Colors.black,
         appBar: AppBar(
+          centerTitle: true,
+          automaticallyImplyLeading: false,
           title: Text('Onde estou', style: TextStyle(fontSize: 25.0)),
         ),
         body: Container(

@@ -40,6 +40,8 @@ class _SplashScreenInitialState extends State<SplashScreenInitial> {
       backgroundColor: Colors.white,
       photoSize: 170.0,
       loaderColor: Colors.black,
+      title: Text("Iniciando o aplicativo",
+        style: TextStyle(color: Colors.white),)
     );
   }
 }

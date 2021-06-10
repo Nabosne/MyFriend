@@ -100,56 +100,61 @@ class _Locais extends State<Locais> {
       backgroundColor: Colors.black,
       appBar: AppBar(
         title: Text(nome),
+        centerTitle: true,
+        automaticallyImplyLeading: false,
       ),
-      body: Stack(
+      body: PageView(
+
         children: [
+          Stack(
+            children: [
           Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
-              Container(
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text(
-                    texto,
-                    style: TextStyle(fontSize: 30.0, color: Colors.white),
-                    textAlign: TextAlign.center,
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Container(
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(
+                        texto,
+                        style: TextStyle(fontSize: 30.0, color: Colors.white),
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
                   ),
-                ),
+                ],
               ),
             ],
           ),
           GridView.count(
-            padding: EdgeInsets.all(4.0),
+            padding: EdgeInsets.all(5.0),
             reverse: true,
             crossAxisCount: 2,
-            children: [Align(
-              alignment: Alignment(0, -1.7),
-              child:
+            children: [
               Padding(
-                padding: const EdgeInsets.all(4.0),
+                padding: const EdgeInsets.all(5.0),
                 child: FlatButton(
-                  minWidth: 105,
-                  height: 105,
+                  minWidth: 110,
+                  height: 110,
                   child: Text(
-                    "Voltar para locais",
+                    "Voltar ao menu",
                     style: TextStyle(fontSize: 30.0, color: Colors.black),
                     textAlign: TextAlign.center,
                   ),
                   onPressed: () {
                     Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => Locais()));
+                        MaterialPageRoute(builder: (context) => Home()));
                   },
                   color: Colors.white,
                 ),
-              )),
-              Align(
-                alignment: Alignment(0, -1.7),
-                child:
-                Padding(
-                padding: const EdgeInsets.all(4.0),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(5.0),
                 child: FlatButton(
-                  minWidth: 105,
-                  height: 105,
+                  minWidth: 110,
+                  height: 110,
                   child: Text(
                     "Ligar para local",
                     style: TextStyle(fontSize: 30.0, color: Colors.black),
@@ -160,12 +165,11 @@ class _Locais extends State<Locais> {
                   },
                   color: Colors.white,
                 ),
-              )),
+              )]),
             ],
-          ),
-          MenuButton(),
+          )
         ],
-      ),
+      )
     );
   }
 

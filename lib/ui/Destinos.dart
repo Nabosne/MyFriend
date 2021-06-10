@@ -102,6 +102,8 @@ class _DestinosState extends State<Destinos> {
       return Scaffold(
         backgroundColor: Colors.black,
         appBar: AppBar(
+          centerTitle: true,
+          automaticallyImplyLeading: false,
           title: Text('Destinos'),
         ),
         body: Container(

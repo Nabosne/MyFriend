@@ -97,6 +97,8 @@ class _DescreverEspacoState extends State<DescreverEspaco> {
       return Scaffold(
         backgroundColor: Colors.black,
         appBar: AppBar(
+          centerTitle: true,
+          automaticallyImplyLeading: false,
           title: Text('Descrever espaço', style: TextStyle(fontSize: 25.0)),
         ),
         body: Container(
